@@ -13,15 +13,27 @@ jobs:
     steps:
     #Checkout repository
     - uses: actions/checkout@v4
+    
     #Setup Node.js
     - uses: actions/setup-node@v6
+    
     - name: install dependencies
       run: npm install
+      
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag nodejsapp:${{ github.sha }}
+      run: docker build . --file Dockerfile --tag 286668306968.dkr.ecr.us-east-1.amazonaws.com/simple/nginx:${{ github.sha }}
+      
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v6.0.0
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET }}
         aws-region: us-east-1
+        
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Push the image
+      run: docker push 286668306968.dkr.ecr.us-east-1.amazonaws.com/simple/nginx:${{ github.sha }}
+      
