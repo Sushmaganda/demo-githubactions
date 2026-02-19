@@ -34,4 +34,13 @@ jobs:
 
     - name: Push the image
       run: docker push 286668306968.dkr.ecr.us-east-1.amazonaws.com/simple/nginx:${{ github.sha }}
+
+    - name: update the image in dep.yaml
+      run: |
+        yq eval -i '.spec.template.spec.containers[0].image = "286668306968.dkr.ecr.us-east-1.amazonaws.com/simple/nginx:${{ github.sha }}"' ./manifests/dep.yaml
+        git config --global user.name "Sushmaganda"
+        git config --global user.email "gsushmareddy2000@gmail.com"
+        git add -u
+        git commit -m "updating the latest image"
+        git push
       
