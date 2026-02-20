@@ -46,10 +46,7 @@ jobs:
         git config --global user.email "gsushmareddy2000@gmail.com"
         git add -u
         git commit -m "updating the latest image"
-
-    - name: Pull latest changes
-      run: git pull --rebase origin main
-      
-        git push
+        git pull origin main --rebase
+        git push origin man
         
       
