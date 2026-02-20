@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: node-app
-          image: 286668306968.dkr.ecr.us-east-1.amazonaws.com/simple/nginx:433788aba81deca57ab8a5569eb6ccfe10c17006
+          image: node:tag
           ports:
             - containerPort: 3000
