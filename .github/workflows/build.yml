@@ -48,7 +48,7 @@ jobs:
         git commit -m "updating the latest image"
 
     - name: Pull latest changes
-      run: git pull origin main
+      run: git pull --rebase origin main
       
         git push
         
