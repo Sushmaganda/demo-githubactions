@@ -38,13 +38,16 @@ jobs:
     - name: push the image
       run: docker push 286668306968.dkr.ecr.us-east-1.amazonaws.com/simple/nginx:${{ github.sha }}
 
-    - name: Update manifest and push
-      run: |
-        yq eval -i '.spec.template.spec.containers[0].image = "286668306968.dkr.ecr.us-east-1.amazonaws.com/simple/nginx:433788aba81deca57ab8a5569eb6ccfe10c17006"' ./manifests/deploy.yaml
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add ./manifests/deploy.yaml
-        git commit -m "updating the latest image"
-        git pull --rebase origin main   # sync with remote
+    - name: Update manifest and push 
+      run: | 
+        yq eval -i '.spec.template.spec.containers[0].image = "286668306968.dkr.ecr.us-east-1.amazonaws.com/simple/nginx:433788aba81deca57ab8a5569eb6ccfe10c17006"' ./manifests/deploy.yaml 
+        git config user.name "Sushmaganda" 
+        git config user.email "gsushmareddy2000@gmail.com" 
+        git add ./manifests/deploy.yaml 
+        git commit -m "updating the latest image" || echo "No changes to commit" 
+        
+        # Rebase and auto-resolve conflicts by preferring our version of deploy.yaml 
+        git pull --rebase origin main || true 
+        git checkout --ours ./manifests/deploy.yaml 
+        git add ./manifests/deploy.yaml git rebase --continue || true 
         git push origin main
-
