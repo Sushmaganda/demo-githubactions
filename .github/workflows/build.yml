@@ -42,14 +42,14 @@ jobs:
 
     - name: Update image in manifest 
       run: | 
-        yq eval -i '.spec.template.spec.containers[0].image = "286668306968.dkr.ecr.us-east-1.amazonaws.com/simple/nginx:433788aba81deca57ab8a5569eb6ccfe10c17006"' ./manifests/deploy.yaml 
-        git config --global user.name "Sushmaganda" 
-        git config --global user.email "gsushmareddy2000@gmal.com" 
-        git add ./manifests/deploy.yaml 
-        git commit -m "updating the latest image" 
+        yq eval -i '.spec.template.spec.containers[0].image = "286668306968.dkr.ecr.us-east-1.amazonaws.com/simple/nginx:433788aba81deca57ab8a5569eb6ccfe10c17006"' ./manifests/deploy.yaml
+        git config --global user.name "github-actions[bot]" 
+        git config --global user.email "github-actions[bot]@users.noreply.github.com" 
+        git add ./manifests/deploy.yaml
+        git commit -m "updating the latest image" || echo "No changes to commit" 
         
     - name: Pull latest changes 
       run: git pull origin main --rebase 
-       
+      
     - name: Push changes 
       run: git push origin main
